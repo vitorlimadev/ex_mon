@@ -1,18 +1,7 @@
 defmodule ExMon do
-  @moduledoc """
-  Documentation for ExMon.
-  """
+  alias ExMon.Player
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ExMon.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def create_player(name, normal_attack, strong_attack, heal) do
+    Player.build(name, normal_attack, strong_attack, heal)
   end
 end
