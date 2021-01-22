@@ -21,6 +21,19 @@ defmodule ExMon do
   end
 
   def make_action(action) do
-    Actions.fecth_action(action)
+    action
+    |> Actions.fecth_action()
+    |> do_action()
+  end
+
+  defp do_action({:ok, action}) do
+    case action do
+      :heal -> "Healed!"
+      _ -> "Attacked!"
+    end
+  end
+
+  defp do_action({:error, invalid_action}) do
+    IO.puts("Error: #{invalid_action} is not a valid action.")
   end
 end
