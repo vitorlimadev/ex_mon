@@ -1,5 +1,5 @@
 defmodule ExMon.Player do
-  @keys [:life, :name, :normal_attack, :strong_attack, :heal]
+  @keys [:life, :name, :actions]
   @max_life 100
 
   @enforce_keys @keys
@@ -9,9 +9,11 @@ defmodule ExMon.Player do
     %ExMon.Player{
       life: @max_life,
       name: name,
-      normal_attack: normal_attack,
-      strong_attack: strong_attack,
-      heal: heal
+      actions: %{
+        normal_attack: normal_attack,
+        strong_attack: strong_attack,
+        heal: heal
+      }
     }
   end
 end
