@@ -8,7 +8,7 @@ defmodule ExMon do
     Player.build(name, normal_attack, strong_attack, heal)
   end
 
-  def create_stub() do
+  def create_player() do
     Player.build("Charizard", "Fire ball", "Inferno", "Coal")
   end
 
@@ -22,14 +22,14 @@ defmodule ExMon do
 
   def make_action(action) do
     action
-    |> Actions.fecth_action()
+    |> Actions.fetch_action()
     |> do_action()
   end
 
   defp do_action({:ok, action}) do
     case action do
       :heal -> "Healed!"
-      _ -> "Attacked!"
+      _ -> Actions.attack(action)
     end
   end
 

@@ -1,4 +1,6 @@
 defmodule ExMon.Player do
+  alias ExMon.Game
+
   @keys [:life, :name, :actions]
   @max_life 100
 
