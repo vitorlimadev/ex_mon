@@ -19,4 +19,9 @@ defmodule ExMon.Game.Status do
     IO.puts("\n===== #{player} healed #{amount} with #{action}!  =====\n")
     Game.info()
   end
+
+  def print_game_over_message(winner) do
+    IO.puts("\n===== Game over: #{winner} wins!  =====\n")
+    Game.info()
+  end
 end

@@ -1,5 +1,6 @@
 defmodule ExMon.Game do
   alias ExMon.Player
+  alias ExMon.Game.Status
   use Agent
 
   def start(computer, player) do
@@ -7,7 +8,7 @@ defmodule ExMon.Game do
       computer: computer,
       player: player,
       turn: :player,
-      status: :started
+      status: :battling
     }
 
     Agent.start_link(fn -> initial_values end, name: __MODULE__)
@@ -36,12 +37,20 @@ defmodule ExMon.Game do
          } = state
        )
        when player_life == 0 or computer_life == 0,
-       do: Map.put(state, :status, :game_over)
+       do: handle_game_over(state, player_life, computer_life)
 
-  defp check_game_over(state) do
-    state
-    |> Map.put(:status, :battle)
+  defp check_game_over(state), do: state
+
+  defp handle_game_over(state, 0, _) do
+    {Map.put(state, :status, :game_over), :computer}
   end
+
+  defp handle_game_over(state, _, 0) do
+    {Map.put(state, :status, :game_over), :player}
+  end
+
+  defp change_turn({%{status: :game_over}, winner}),
+    do: Status.print_game_over_message(winner)
 
   defp change_turn(%{turn: :player} = state), do: Map.put(state, :turn, :computer)
   defp change_turn(%{turn: :computer} = state), do: Map.put(state, :turn, :player)
