@@ -14,4 +14,9 @@ defmodule ExMon.Game.Status do
     IO.puts("\n===== #{attacker} used #{action}! Damage: #{damage}  =====\n")
     Game.info()
   end
+
+  def print_heal_message(player, action, amount) do
+    IO.puts("\n===== #{player} healed #{amount} with #{action}!  =====\n")
+    Game.info()
+  end
 end

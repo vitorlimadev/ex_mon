@@ -8,13 +8,13 @@ defmodule ExMon.Game.Actions.Attack do
   def attack_opponent(opponent, action) do
     damage = calculate_damage(action)
 
+    show_attack_status(Game.turn(), action, damage)
+
     opponent
     |> Game.fetch_player()
     |> Map.get(:life)
     |> calculate_total_life(damage)
     |> update_opponent_life(opponent)
-
-    show_attack_status(Game.turn(), action, damage)
   end
 
   defp calculate_damage(:normal_attack), do: Enum.random(@normal_attack_power)

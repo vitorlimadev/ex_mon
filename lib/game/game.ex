@@ -1,4 +1,5 @@
 defmodule ExMon.Game do
+  alias ExMon.Player
   use Agent
 
   def start(computer, player) do
@@ -17,8 +18,33 @@ defmodule ExMon.Game do
   end
 
   def update(state) do
-    Agent.update(__MODULE__, fn _ -> state end)
+    Agent.update(__MODULE__, fn _ -> update_game_lifecycle(state) end)
+
+    info()
   end
+
+  def update_game_lifecycle(state) do
+    state
+    |> check_game_over()
+    |> change_turn()
+  end
+
+  defp check_game_over(
+         %{
+           player: %Player{life: player_life},
+           computer: %Player{life: computer_life}
+         } = state
+       )
+       when player_life == 0 or computer_life == 0,
+       do: Map.put(state, :status, :game_over)
+
+  defp check_game_over(state) do
+    state
+    |> Map.put(:status, :battle)
+  end
+
+  defp change_turn(%{turn: :player} = state), do: Map.put(state, :turn, :computer)
+  defp change_turn(%{turn: :computer} = state), do: Map.put(state, :turn, :player)
 
   def fetch_player(who), do: Map.get(info(), who)
   def turn, do: Map.get(info(), :turn)
