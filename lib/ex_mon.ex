@@ -34,6 +34,6 @@ defmodule ExMon do
   end
 
   defp do_action({:error, invalid_action}) do
-    IO.puts("Error: #{invalid_action} is not a valid action.")
+    Status.print_invalid_action_message(invalid_action)
   end
 end
