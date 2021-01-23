@@ -23,17 +23,17 @@ defmodule ExMon do
   def make_action(action) do
     action
     |> Actions.fetch_action()
-    |> do_action()
+    |> do_action(Game.turn())
   end
 
-  defp do_action({:ok, action}) do
+  defp do_action({:ok, action}, player) do
     case action do
-      :heal -> "Healed!"
-      _ -> Actions.attack(action)
+      :heal -> Actions.heal(player)
+      _ -> Actions.attack(action, player)
     end
   end
 
-  defp do_action({:error, invalid_action}) do
+  defp do_action({:error, invalid_action}, _) do
     Status.print_invalid_action_message(invalid_action)
   end
 end

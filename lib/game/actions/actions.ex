@@ -1,6 +1,6 @@
 defmodule ExMon.Game.Actions do
   alias ExMon.Game
-  alias ExMon.Game.Actions.{Attack}
+  alias ExMon.Game.Actions.{Attack, Heal}
 
   def fetch_action(action) do
     Game.turn()
@@ -21,10 +21,14 @@ defmodule ExMon.Game.Actions do
     |> Map.get(action)
   end
 
-  def attack(action) do
-    case Game.turn() do
+  def attack(action, player) do
+    case player do
       :player -> Attack.attack_opponent(:computer, action)
       :computer -> Attack.attack_opponent(:player, action)
     end
+  end
+
+  def heal(player) do
+    Heal.heal_self(player)
   end
 end
