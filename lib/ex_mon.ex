@@ -9,7 +9,7 @@ defmodule ExMon do
   end
 
   def create_player() do
-    Player.build("Charizard", "Fire ball", "Inferno", "Coal")
+    Player.build("Charizard", "Heat Wave", "Flame Burst", "Dragon snack")
   end
 
   def start_game(player) do
