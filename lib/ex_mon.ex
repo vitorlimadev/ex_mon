@@ -23,7 +23,8 @@ defmodule ExMon do
   def make_action(action) do
     action
     |> Actions.fetch_action()
-    |> do_action(Game.turn())
+    |> do_action(:player)
+    |> computer_action(Game.info())
   end
 
   defp do_action({:ok, action}, player) do
@@ -34,6 +35,16 @@ defmodule ExMon do
   end
 
   defp do_action({:error, invalid_action}, _) do
-    Status.print_invalid_action_message(invalid_action)
+    {:error, Status.print_invalid_action_message(invalid_action)}
+  end
+
+  defp computer_action({:error, _}, _), do: nil
+
+  defp computer_action(_, %{status: :game_over}), do: nil
+
+  defp computer_action(_, _) do
+    action = Enum.random([:normal_attack, :strong_attack, :heal])
+
+    do_action({:ok, action}, :computer)
   end
 end

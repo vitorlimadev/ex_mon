@@ -26,7 +26,6 @@ defmodule ExMon.Game do
 
       {:game_over, winner} ->
         Status.print_game_over_message(Map.get(fetch_player(winner), :name))
-        Agent.stop(__MODULE__)
     end
   end
 
